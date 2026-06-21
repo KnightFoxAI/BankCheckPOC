@@ -71,9 +71,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-client = OpenAI(
-    base_url="https://router.huggingface.co/v1", api_key=st.secrets["HF_TOKEN"]
-)
+
+@st.cache_resource
+def get_client():
+    return OpenAI(
+        base_url="https://router.huggingface.co/v1", api_key=st.secrets["HF_TOKEN"]
+    )
+
+
+client = get_client()
+
 
 MODEL_MAPPING = {
     "Qwen 32B": "Qwen/Qwen3-VL-32B-Instruct:featherless-ai",
